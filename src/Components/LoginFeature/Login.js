@@ -1,7 +1,7 @@
 import React from 'react'
 import './loginpage.css'
 import { useNavigate } from "react-router-dom";
-import photo from './img/login.jpg'
+import photo from './img/finallogo.jpg'
 import { Link } from "react-router-dom";
 import ChatBot from "../ChatBot";
 import google from './img/google.svg'
@@ -14,7 +14,7 @@ function Login() {
   }
   return (
     <div className="loginpage">
-      <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+      <nav className="navbar navbar-expand-lg navbar-light  fixed-top">
         <div className="container">
           <Link className="navbar-brand" to={"/"}>
             <img
@@ -28,10 +28,11 @@ function Login() {
           <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
-                <Link className="nav-link" to={"/sign-in"}>
+                <Link className="nav-link my-nav-item" to={"/"}>
                   Login
                 </Link>
               </li>
+
               <li className="nav-item">
                 <Link className="nav-link" to={"/sign-up"}>
                   Sign up

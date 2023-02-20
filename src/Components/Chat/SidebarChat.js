@@ -17,8 +17,8 @@ function SidebarChat({ addNewChat }) {
     <div className="sidebar-chat">
       <Avatar src={`https://api.dicebear.com/5.x/${seed}/svg`} />
       <div className="sidebarchat__info">
-        <h2>Student</h2>
-        <p>About the university</p>
+        <h2>Group name</h2>
+        <p>group info</p>
       </div>
     </div>
   ) : (

@@ -15,7 +15,7 @@ function Chatdata() {
       <div className="chat-header">
         <Avatar src={`https://api.dicebear.com/5.x/${seed}/svg`} />
         <div className="chatheader-info">
-          <h3>Student 1</h3>
+          <h3>Group Name</h3>
           <p>Last Seen</p>
         </div>
         <div className="chatheader-right">

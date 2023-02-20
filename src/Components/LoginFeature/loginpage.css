@@ -53,20 +53,23 @@ span {
 .custom-control-label {
   font-weight: 400;
 }
- .googleBtn{
-    text-transform: inherit !important;
-    align-items: center;
-    height: 45px;
-    width: 200px;
-    outline: none;
-    border-radius: 20px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    font-weight: 500;
-    background-color: azure;
- }
+.googleBtn {
+  text-transform: inherit !important;
+  align-items: center;
+  height: 45px;
+  width: 200px;
+  outline: none;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  font-weight: 500;
+  background-color: azure;
+}
 
- .googleBtn:hover {
-    background-color: #f8f8f8;
-  }
+.googleBtn:hover {
+  background-color: #f8f8f8;
+}
+.my-nav-item {
+  color: black;
+}
