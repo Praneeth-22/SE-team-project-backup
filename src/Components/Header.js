@@ -7,10 +7,14 @@ import user from '../images/user.svg'
 import logo2 from '../images/logo/logo2.jpg'
 import ChatIcon from "@mui/icons-material/Chat";
 import { useNavigate } from "react-router-dom";
+import Chat from "./Chat/Chatpage";
 function Header() {
   const navigate = useNavigate();
   const loggedOut = () => {
     navigate("/");
+  };
+  const chatpageRoute = () => {
+    navigate("/Chat");
   };
   return (
     <Container>
@@ -27,16 +31,18 @@ function Header() {
               <span>Home</span>
             </a>
             <a href="/chat">
-            <ChatIcon/>
-            <spam style={{color:"black"}}>Connect</spam>
+              <ChatIcon />
+              <spam style={{ color: "black" }} onClick={chatpageRoute}>
+                Connect
+              </spam>
             </a>
           </NavList>
           <User>
             <a>
               {/* {props.user && props.user.photoURL ? ( */}
-                {/* <img src={user} alt="" /> */}
+              {/* <img src={user} alt="" /> */}
               {/* ) : ( */}
-                <img src={user} alt="" />
+              <img src={user} alt="" />
               {/* )} */}
               <span>
                 Me
