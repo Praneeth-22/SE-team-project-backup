@@ -4,6 +4,8 @@ import styled from "styled-components";
 import downCcon from '../images/down-icon.svg'
 import navHome from '../images/nav-home.svg'
 import user from '../images/user.svg'
+import logo2 from '../images/logo/logo2.jpg'
+import ChatIcon from "@mui/icons-material/Chat";
 
 function Header() {
   return (
@@ -11,7 +13,7 @@ function Header() {
       <Elements>
         <Logo>
           <a href="/home">
-            <img src="" alt="logo" />
+            <img src={logo2} alt="logo" />
           </a>
         </Logo>
         <Nav>
@@ -19,6 +21,10 @@ function Header() {
             <a href="/home">
               <img src={navHome} alt="" />
               <span>Home</span>
+            </a>
+            <a href="/chat">
+            <ChatIcon/>
+            <spam style={{color:"black"}}>Connect</spam>
             </a>
           </NavList>
           <User>
