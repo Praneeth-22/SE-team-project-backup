@@ -19,7 +19,9 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Container from "react-bootstrap/Container";
 import demo2 from '../images/demo2.jpg'
+import { useNavigate } from "react-router-dom";
 function Home() {
+  const navigate = useNavigate();
   const [value, setValue] = useState(3);
   return (
     <Container>
@@ -32,6 +34,7 @@ function Home() {
             href="#basic-chip"
             clickable
             variant="outlined"
+            onClick={() => navigate("/home") }
           />
           <Chip
             avatar={<SportsBasketballIcon />}

@@ -6,8 +6,12 @@ import navHome from '../images/nav-home.svg'
 import user from '../images/user.svg'
 import logo2 from '../images/logo/logo2.jpg'
 import ChatIcon from "@mui/icons-material/Chat";
-
+import { useNavigate } from "react-router-dom";
 function Header() {
+  const navigate = useNavigate();
+  const loggedOut = () => {
+    navigate("/");
+  };
   return (
     <Container>
       <Elements>
@@ -42,7 +46,7 @@ function Header() {
 
             {/* <SignOut onClick={() => props.signOut()}> */}
             <SignOut>
-              <a>Sign Out</a>
+              <a onClick={loggedOut}>Sign Out</a>
             </SignOut>
           </User>
         </Nav>
