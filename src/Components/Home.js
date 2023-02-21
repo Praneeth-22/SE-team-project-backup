@@ -1,16 +1,16 @@
-import React from 'react'
-import styled from 'styled-components'
-import { useState,useEffect } from 'react'
-import  user from '../images/user.svg'
+import React from "react";
+import styled from "styled-components";
+import { useState, useEffect } from "react";
+import user from "../images/user.svg";
 import EventIcon from "@mui/icons-material/Event";
 import ArticleIcon from "@mui/icons-material/Article";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import demopost from '../images/demoimg.jpg'
-import Rating from '@mui/material/Rating';
+import demopost from "../images/demoimg.jpg";
+import Rating from "@mui/material/Rating";
 import CommentIcon from "@mui/icons-material/Comment";
 import StarIcon from "@mui/icons-material/Star";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
-import Chip from '@mui/material/Chip';
+import Chip from "@mui/material/Chip";
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import SportsBasketballIcon from "@mui/icons-material/SportsBasketball";
 import SchoolIcon from "@mui/icons-material/School";
@@ -18,9 +18,33 @@ import CelebrationIcon from "@mui/icons-material/Celebration";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Container from "react-bootstrap/Container";
-import demo2 from '../images/demo2.jpg'
-function Home() {
+import demo2 from "../images/demo2.jpg";
+import { useNavigate } from "react-router-dom";
+import Post from "./Post";
+
+function Home(props) {
+  const navigate = useNavigate();
+  const [showModel, setShowModel] = useState("close");
+
   const [value, setValue] = useState(3);
+  const handleClick = (e) => {
+    e.preventDefault();
+    console.log("clicked");
+    if (e.target !== e.currentTarget) {
+      return;
+    }
+    switch (showModel) {
+      case "open":
+        setShowModel("close");
+        break;
+      case "close":
+        setShowModel("open");
+        break;
+      default:
+        setShowModel("close");
+        break;
+    }
+  };
   return (
     <Container>
       <HomeContainer>
@@ -32,6 +56,7 @@ function Home() {
             href="#basic-chip"
             clickable
             variant="outlined"
+            onClick={() => navigate("/home")}
           />
           <Chip
             avatar={<SportsBasketballIcon />}
@@ -69,7 +94,7 @@ function Home() {
         <ShareBox>
           <div>
             <img src={user} alt="user" />
-            <button>Start a post</button>
+            <button onClick={handleClick}>Start a post</button>
           </div>
           <div>
             <button>
@@ -216,24 +241,25 @@ function Home() {
             </SocialActions>
           </Article>
         </div>
+        {console.log(showModel)}
+        <Post showModel={showModel} handleClick={handleClick} />
       </HomeContainer>
     </Container>
   );
 }
 const HomeContainer = styled.div`
-grid-area: main;
-
-`
+  grid-area: main;
+`;
 const CommonCard = styled.div`
-text-align: center;
-overflow: hidden;
-margin-bottom: 8px;
-background: #fff;
-border-radius: 5px;
-position: relative;
-border: none;
-box-shadow: 0 0 0 1px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0 / 20%);
-`
+  text-align: center;
+  overflow: hidden;
+  margin-bottom: 8px;
+  background: #fff;
+  border-radius: 5px;
+  position: relative;
+  border: none;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 15%), 0 0 0 rgb(0 0 0 / 20%);
+`;
 const Category = styled(CommonCard)`
   display: flex;
   justify-content: space-around;
@@ -241,176 +267,171 @@ const Category = styled(CommonCard)`
   padding: 6px 16px;
   color: #0a66c2;
   margin-top: 11px;
-
 `;
 const ShareBox = styled(CommonCard)`
-display: flex;
-flex-direction: column;
-color: #958b7b;
-margin: 0 0 8px;
-background: white;
-div {
-  button {
-    outline: none;
-    color: rgba(0, 0, 0, 0.6);
-    font-size: 14px;
-    line-height: 1.5;
-    min-height: 48px;
-    background: transparent;
-    border: none;
-    display: flex;
-    align-items: center;
-    font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  color: #958b7b;
+  margin: 0 0 8px;
+  background: white;
+  div {
+    button {
+      outline: none;
+      color: rgba(0, 0, 0, 0.6);
+      font-size: 14px;
+      line-height: 1.5;
+      min-height: 48px;
+      background: transparent;
+      border: none;
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+    }
+    &:first-child {
+      display: flex;
+      align-items: center;
+      padding: 8px 16px 0px 16px;
+      img {
+        width: 48px;
+        border-radius: 50%;
+        margin-right: 8px;
+      }
+      button {
+        margin: 4px 0;
+        flex-grow: 1;
+        border-radius: 35px;
+        padding-left: 16px;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        background-color: white;
+        text-align: left;
+      }
+    }
+    &:nth-child(2) {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      flex-direction: row;
+      padding-bottom: 4px;
+      button {
+        img {
+          margin: 0 4px 0 -2px;
+        }
+        span {
+          color: #70b5f9;
+        }
+      }
+    }
   }
-  &:first-child {
+`;
+const Article = styled(CommonCard)`
+  padding: 0;
+  margin: 0 0 8px;
+  overflow: visible;
+`;
+const SharedActor = styled.div`
+  padding-right: 40px;
+  flex-wrap: nowrap;
+  padding: 12px 16px 0;
+  margin-bottom: 8px;
+  align-items: center;
+  display: flex;
+  a {
+    margin-right: 12px;
+    flex-grow: 1;
+    overflow: hidden;
     display: flex;
-    align-items: center;
-    padding: 8px 16px 0px 16px;
+    text-decoration: none;
     img {
       width: 48px;
-      border-radius: 50%;
-      margin-right: 8px;
+      height: 48px;
     }
-    button {
-      margin: 4px 0;
+    & > div {
+      display: flex;
+      flex-direction: column;
       flex-grow: 1;
-      border-radius: 35px;
-      padding-left: 16px;
-      border: 1px solid rgba(0, 0, 0, 0.15);
-      background-color: white;
-      text-align: left;
-    }
-  }
-  &:nth-child(2) {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    flex-direction: row;
-    padding-bottom: 4px;
-    button {
-      img {
-        margin: 0 4px 0 -2px;
-      }
+      flex-basis: 0;
+      margin-left: 8px;
+      overflow: hidden;
       span {
-        color: #70b5f9;
+        text-align: left;
+        &:first-child {
+          font-size: 14px;
+          font-weight: 700;
+          color: rgba(0, 0, 0, 1);
+        }
+        &:nth-child(n + 1) {
+          font-size: 12px;
+          color: rgba(0, 0, 0, 0.6);
+        }
       }
     }
   }
-}
-`
-const Article = styled(CommonCard)`
-padding: 0;
-margin: 0 0 8px;
-overflow: visible;
-`
-const SharedActor = styled.div`
-padding-right: 40px;
-flex-wrap: nowrap;
-padding: 12px 16px 0;
-margin-bottom: 8px;
-align-items: center;
-display: flex;
-a {
-  margin-right: 12px;
-  flex-grow: 1;
-  overflow: hidden;
-  display: flex;
-  text-decoration: none;
-  img {
-    width: 48px;
-    height: 48px;
+  button {
+    position: absolute;
+    right: 12px;
+    top: 0;
+    background: transparent;
+    border: none;
+    outline: none;
   }
-  & > div {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    flex-basis: 0;
-    margin-left: 8px;
-    overflow: hidden;
-    span {
-      text-align: left;
-      &:first-child {
-        font-size: 14px;
-        font-weight: 700;
-        color: rgba(0, 0, 0, 1);
-      }
-      &:nth-child(n + 1) {
-        font-size: 12px;
-        color: rgba(0, 0, 0, 0.6);
-      }
-    }
-  }
-}
-button {
-  position: absolute;
-  right: 12px;
-  top: 0;
-  background: transparent;
-  border: none;
-  outline: none;
-}
-`
+`;
 const Description = styled.div`
-padding: 0 16px;
-overflow: hidden;
-color: rgba(0, 0, 0, 0.9);
-font-size: 14px;
-text-align: left;
-`
+  padding: 0 16px;
+  overflow: hidden;
+  color: rgba(0, 0, 0, 0.9);
+  font-size: 14px;
+  text-align: left;
+`;
 const SharedImg = styled.div`
-margin-top: 8px;
-width: 100%;
-display: block;
-position: relative;
-background-color: #f9fafb;
-img {
-  object-fit: contain;
+  margin-top: 8px;
   width: 100%;
-  height: 100%;
-}
-
-`
+  display: block;
+  position: relative;
+  background-color: #f9fafb;
+  img {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+  }
+`;
 
 const SocialCounts = styled.ul`
-line-height: 1.3;
-display: flex;
-align-items: flex-start;
-overflow: auto;
-margin: 0 16px;
-padding: 8px 0;
-border-bottom: 1px solid #e9e5df;
-list-style: none;
-li {
-  margin-right: 5px;
-  font-size: 12px;
-  button {
-    display: flex;
-  }
-}
-
-`
-const SocialActions = styled.div`
-align-items: center;
-display: flex;
-justify-content: space-between;
-margin: 0;
-min-height: 40px;
-padding: 4px 8px;
-button {
-  display: inline-flex;
-  align-items: center;
-  padding: 8px;
-  color: #0a66c2;
-  background: transparent;
-  border: none;
-  @media (min-width: 768px) {
-    span {
-      margin-left: 8px;
+  line-height: 1.3;
+  display: flex;
+  align-items: flex-start;
+  overflow: auto;
+  margin: 0 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid #e9e5df;
+  list-style: none;
+  li {
+    margin-right: 5px;
+    font-size: 12px;
+    button {
+      display: flex;
     }
   }
-}
+`;
+const SocialActions = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  min-height: 40px;
+  padding: 4px 8px;
+  button {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px;
+    color: #0a66c2;
+    background: transparent;
+    border: none;
+    @media (min-width: 768px) {
+      span {
+        margin-left: 8px;
+      }
+    }
+  }
+`;
 
-`
-
-
-export default Home
+export default Home;
