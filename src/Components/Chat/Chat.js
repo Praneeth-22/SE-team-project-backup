@@ -1,4 +1,10 @@
-import { AttachFile, MoreVert, SearchOutlined } from "@mui/icons-material";
+import {
+  AttachFile,
+  InsertEmoticon,
+  Mic,
+  MoreVert,
+  SearchOutlined,
+} from "@mui/icons-material";
 import { Avatar, IconButton } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import "../Chat/style.css";
@@ -15,7 +21,7 @@ function Chatdata() {
       <div className="chat-header">
         <Avatar src={`https://api.dicebear.com/5.x/${seed}/svg`} />
         <div className="chatheader-info">
-          <h3>Group Name</h3>
+          <h3>Student 1</h3>
           <p>Last Seen</p>
         </div>
         <div className="chatheader-right">
@@ -32,9 +38,19 @@ function Chatdata() {
       </div>
 
       <div className="chat-body">
-        <p className="chat-message">Welcome to the Students Chat</p>
+        <p className={`chat-message$ {true &&'chat-receiver'}`}>
+          <span className="chat-name"></span>
+          <span className="chat-timestamp"></span>
+        </p>
       </div>
-      <div className="chat-footer"></div>
+      <div className="chat-footer">
+        <InsertEmoticon />
+        <form>
+          <input type="text" />
+          <button>Send a Message</button>
+        </form>
+        <Mic />
+      </div>
     </div>
   );
 }

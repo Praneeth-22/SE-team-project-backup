@@ -115,7 +115,7 @@
     url("https://images.unsplash.com/photo-1533035353720-f1c6a75cd8ab?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80");
     background-repeat: repeat;
     background-position: center;
-    padding: 260px;
+    padding: 190px;
 }
 .chat-message{
     position: relative;
@@ -128,5 +128,33 @@
 }
 .chat-name{
     position: absolute;
-    top:-15px;
+    top:0px;
+    font-weight: 800;
+    font-size: xx-small;
+}
+.chat-timestamp{
+    top:0px;
+    font-size: xx-small;
+}
+.chat-receiver{
+    margin-left: auto;
+    background-color: #dcf8c6;
+}
+.chat-footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 62px;
+    border-top: 1px soild lightgray;
+}
+.chat-footer > form{
+    flex: 1;
+    display: flex;
+    
+}
+.chat-footer > form > input{
+    flex: 1;
+    border-radius: 30px;
+    padding: 10px;
+    border: none;
 }
