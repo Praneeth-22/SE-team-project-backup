@@ -1,0 +1,96 @@
+import React, { useContext, useState, useEffect } from "react";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  setDoc,
+  doc,
+  updateDoc,
+  serverTimestamp,
+  getDoc,
+} from "firebase/firestore";
+import { db } from "../../../firebase_service";
+
+export default function Search() {
+  const [username, setUsername] = useState("");
+  const [err, setErr] = useState(false);
+  const [user, setUser] = useState(null);
+  //
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+  const [avatarUrl, setavatarUrl] = useState("");
+  const [displayName, setDisplayName] = useState("");
+  const [email, setEmail] = useState("");
+  useEffect(() => {
+    console.log("user in search chat:", currentUser);
+    const prepareData = {
+      displayName: currentUser?.displayName,
+      email: currentUser?.email,
+      avatarUrl: currentUser?.avatarUrl,
+    };
+    setavatarUrl(prepareData?.avatarUrl);
+    setDisplayName(prepareData?.displayName);
+    setEmail(prepareData?.email);
+  }, [currentUser]);
+  //
+  const handleSearch = async () => {
+    console.log("searching");
+  };
+
+  const handleKey = (e) => {
+    e.code === "Enter" && handleSearch();
+  };
+  const handleSelect = async () => {
+    //check whether the group(chats in firestore) exists ,if not create one
+    //creating a combined id for the 1-1 chat
+    const combinedId = user.uid
+    try {
+      const res = await getDoc(doc(db, "chats", combinedId));
+      console.log("combine key in try", combinedId);
+      console.log("res in try", res);
+      if (!res.exists()) {
+        //create a new chat
+        console.log("going to create new chat-----");
+        await setDoc(doc(db, "chats", combinedId), { messages: [] });
+        console.log("new chat created-----");
+        //create user chats
+        console.log("going to create 1-user chats-----");
+        console.log("currentUser--------", currentUser.uid);
+       
+
+        console.log("1-user chats created-----");
+        console.log("going to create 2-user chats-----");
+        
+        console.log("2-user chats created-----");
+      }
+    } catch (err) {
+      console.log("error in search------", err);
+    }
+    setUser(null);
+    setUsername("");
+  };
+  return (
+    <div className="search">
+      <div className="searchForm">
+        <input
+          type="text"
+          placeholder="Find a user"
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
+          onKeyDown={handleKey}
+          value={username}
+        />
+      </div>
+  
+      {user && (
+        <div className="userChat" onClick={handleSelect}>
+          <img src={user.avatarUrl} alt="avatar" />
+          <div className="userChatInfo">
+            <span className="name">{user.displayName}</span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
