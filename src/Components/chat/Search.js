@@ -7,20 +7,19 @@ import {
   setDoc,
   doc,
   updateDoc,
-  serverTimestamp,
+  // serverTimestamp,
   getDoc,
 } from "firebase/firestore";
 import { db } from "../../../firebase_service";
-
 export default function Search() {
   const [username, setUsername] = useState("");
-  const [err, setErr] = useState(false);
   const [user, setUser] = useState(null);
   //
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const [avatarUrl, setavatarUrl] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
+  const [err, setErr] = useState(false);
   useEffect(() => {
     console.log("user in search chat:", currentUser);
     const prepareData = {
@@ -35,6 +34,19 @@ export default function Search() {
   //
   const handleSearch = async () => {
     console.log("searching");
+    const q = query(
+      collection(db, "users"),
+      where("displayName", "==", username)
+    );
+
+    try {
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        setUser(doc.data());
+      });
+    } catch (err) {
+      setErr(true);
+    }
   };
 
   const handleKey = (e) => {
@@ -43,7 +55,12 @@ export default function Search() {
   const handleSelect = async () => {
     //check whether the group(chats in firestore) exists ,if not create one
     //creating a combined id for the 1-1 chat
-    const combinedId = user.uid
+    console.log("going to create comid");
+    const combinedId =
+      currentUser.uid > user.uid
+        ? currentUser.uid + user.uid
+        : user.uid + currentUser.uid;
+
     try {
       const res = await getDoc(doc(db, "chats", combinedId));
       console.log("combine key in try", combinedId);
@@ -56,11 +73,24 @@ export default function Search() {
         //create user chats
         console.log("going to create 1-user chats-----");
         console.log("currentUser--------", currentUser.uid);
-       
-
+        await updateDoc(doc(db, "userChats", currentUser.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: user.uid,
+            displayName: user.displayName,
+            //
+          },
+          // [combinedId + ".date"]: serverTimestamp(),
+        });
         console.log("1-user chats created-----");
         console.log("going to create 2-user chats-----");
-        
+        await updateDoc(doc(db, "userChats", user.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: currentUser.uid,
+            displayName: currentUser.displayName,
+            //
+          },
+          // [combinedId + ".date"]: serverTimestamp(),
+        });
         console.log("2-user chats created-----");
       }
     } catch (err) {
@@ -82,7 +112,7 @@ export default function Search() {
           value={username}
         />
       </div>
-  
+      {err && <p className="error">User not found</p>}
       {user && (
         <div className="userChat" onClick={handleSelect}>
           <img src={user.avatarUrl} alt="avatar" />
@@ -91,6 +121,10 @@ export default function Search() {
           </div>
         </div>
       )}
+      <div>
+        <button onClick={handleSearch}>Search</button>
+          <p>pop</p>
+      </div>
     </div>
   );
 }
