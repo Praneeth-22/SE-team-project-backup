@@ -91,16 +91,6 @@ export default function Input() {
       "----------------------------------------------data.user.email",
       data.user.email
     );
-    //mail notification
-    axios.post("https://interact-react-impact.herokuapp.com/sendEmail", {
-      email: data.user.email,
-      subject: "New Message",
-      info: {
-        type: "chat",
-        sender: currentUser.displayName,
-        text: text,
-      },
-    });
 
     console.log("send");
     setText("");
@@ -142,9 +132,7 @@ export default function Input() {
           onClick={handleSend}
           style={{
             backgroundColor: text || img ? "#6237a0" : "#9e9e9e",
-            cursor: text || img ? "pointer" : "not-allowed",
-            borderRadius: "15px",
-            border: "none",
+
             color: "white",
             padding: "10px 20px",
             textAlign: "center",
