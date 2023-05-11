@@ -4,6 +4,20 @@ import { useState, useEffect } from "react";
 import user from "../images/user.svg";
 import EventIcon from "@mui/icons-material/Event";
 import ArticleIcon from "@mui/icons-material/Article";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import Box from "@mui/material/Box";
+import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
+import userImgUnLoad from "./Images/user.png";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import spinner from "./Images/spin.svg";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import Post from "./Post";
+import { faker } from "@faker-js/faker";
+import Modal from "react-bootstrap/Modal";
+import Tabs from "@mui/material/Tabs";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import demopost from "../images/demoimg.jpg";
 import Rating from "@mui/material/Rating";
@@ -16,14 +30,34 @@ import SportsBasketballIcon from "@mui/icons-material/SportsBasketball";
 import SchoolIcon from "@mui/icons-material/School";
 import CelebrationIcon from "@mui/icons-material/Celebration";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+// import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Container from "react-bootstrap/Container";
 import demo2 from "../images/demo2.jpg";
 import { useNavigate } from "react-router-dom";
 import Post from "./Post";
-
+import {
+  doc,
+  collection,
+  addDoc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 function Home(props) {
-  const navigate = useNavigate();
+  
+    const navigate = useNavigate();
+    //
+    const { loading, getArticlesAPI, articles } = useUserAuth(); // destructuring user from context
+    const ava = faker.image.avatar();
+    const user = JSON.parse(localStorage.getItem("user"));
+    const [avatarUrl, setavatarUrl] = useState(ava); // state for photo url
+    const [displayName, setDisplayName] = useState(""); // state for display name
+    const [email, setEmail] = useState("");
+    //
+    const [isOpen, setIsOpen] = useState(false);
+    const [openEvent, setOpenEvent] = useState(false);
+
+    const defaultDate = new Date();
+    const catcolor = { color: "#6237a0" };
   const [showModel, setShowModel] = useState("close");
 
   const [value, setValue] = useState(3);
